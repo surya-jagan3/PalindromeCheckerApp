@@ -2,27 +2,29 @@ import java.util.Scanner;
 
 public class PalindromeCheckerApp {
         public static void main(String[] args) {
-            Scanner scanner = new Scanner(System.in);
+            PalindromeService service = new PalindromeService();
+            String input = "racecar";
 
-            if (scanner.hasNextLine()) {
-                String input = scanner.nextLine();
+            boolean result = service.checkPalindrome(input);
 
-                String normalized = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+            System.out.println("Input: " + input);
+            System.out.println("Is Palindrome? " + result);
+        }
+}
 
-                boolean isPalindrome = true;
-                int length = normalized.length();
+class PalindromeService {
 
-                for (int i = 0; i < length / 2; i++) {
-                    if (normalized.charAt(i) != normalized.charAt(length - 1 - i)) {
-                        isPalindrome = false;
-                        break;
-                    }
-                }
+    public boolean checkPalindrome(String input) {
+        int start = 0;
+        int end = input.length() - 1;
 
-                System.out.println("Input: " + input);
-                System.out.println("Is Palindrome?: " + isPalindrome);
+        while (start < end) {
+            if (input.charAt(start) != input.charAt(end)) {
+                return false;
             }
-
-            scanner.close();
+            start++;
+            end--;
+        }
+        return true;
     }
 }
