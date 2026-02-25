@@ -2,28 +2,29 @@ import java.util.Scanner;
 
 public class PalindromeCheckerApp {
         public static void main(String[] args) {
-            PalindromeService service = new PalindromeService();
-            String input = "racecar";
-
-            boolean result = service.checkPalindrome(input);
-
-            System.out.println("Input: " + input);
-            System.out.println("Is Palindrome? " + result);
+            String input = "level";
+            PalindromeStrategy strategy = new StackStrategy();
+            boolean result = strategy.check(input);
+            System.out.println("Input : " + input);
+            System.out.println("Is Palindrome? : " + result);
         }
 }
 
-class PalindromeService {
+interface PalindromeStrategy {
+    boolean check(String input);
+}
 
-    public boolean checkPalindrome(String input) {
-        int start = 0;
-        int end = input.length() - 1;
-
-        while (start < end) {
-            if (input.charAt(start) != input.charAt(end)) {
+class StackStrategy implements PalindromeStrategy {
+    @Override
+    public boolean check(String input) {
+        java.util.Stack<Character> stack = new java.util.Stack<>();
+        for (char c : input.toCharArray()) {
+            stack.push(c);
+        }
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
                 return false;
             }
-            start++;
-            end--;
         }
         return true;
     }
