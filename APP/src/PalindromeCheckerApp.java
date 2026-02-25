@@ -2,27 +2,27 @@ import java.util.Scanner;
 
 public class PalindromeCheckerApp {
         public static void main(String[] args) {
-            String input = "level";
-            PalindromeStrategy strategy = new StackStrategy();
-            boolean result = strategy.check(input);
-            System.out.println("Input : " + input);
-            System.out.println("Is Palindrome? : " + result);
-        }
-}
+            String input = "Level";
 
-interface PalindromeStrategy {
-    boolean check(String input);
-}
+            long startTime = System.nanoTime();
 
-class StackStrategy implements PalindromeStrategy {
-    @Override
-    public boolean check(String input) {
-        java.util.Stack<Character> stack = new java.util.Stack<>();
-        for (char c : input.toCharArray()) {
-            stack.push(c);
+            boolean isPalindrome = checkPalindrome(input);
+
+            long endTime = System.nanoTime();
+            long duration = endTime - startTime;
+
+            System.out.println("Input: " + input);
+            System.out.println("Is Palindrome? " + isPalindrome);
+            System.out.println("Execution Time: " + duration + " ns");
         }
-        for (char c : input.toCharArray()) {
-            if (c != stack.pop()) {
+
+    private static boolean checkPalindrome(String text) {
+        if (text == null) return false;
+        String clean = text.toLowerCase();
+        int left = 0;
+        int right = clean.length() - 1;
+        while (left < right) {
+            if (clean.charAt(left++) != clean.charAt(right--)) {
                 return false;
             }
         }
